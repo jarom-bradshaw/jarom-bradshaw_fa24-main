@@ -1,0 +1,61 @@
+---
+layout: cv
+title: Jarom Bradshaw's CV
+---
+# Jarom Bradshaw
+Programmer, AI enthusiast, Tutor
+
+<div id="webaddress">
+<a href="https://github.com/jarom-bradshaw">Jarom's Github</a>
+| <a href="https://github.com/byui-math-dept/jarom-bradshaw_fa24">My Repo</a>
+</div>
+
+
+## Contact
+- **Phone:** 859-420-4178
+- **Email:** jarombrads@gmail.com
+- **Location:** Rexburg, Idaho
+
+## Skills
+- **Computer Software Skills:** Python, mySQL, Tableau, Excel
+- **Personal:** Active Listening, Interpersonal, Problem solving, Flexibility, Teamworker
+- **Professional:** MS Office, Google Drive, Spreadsheets, Ticketing, Windows OS, Chrome OS
+
+## Education
+`Sept 2023 - Dec 2026`
+__Brigham Young University - Idaho__
+- Student in Computer Science
+
+## Work Experience
+`Aug 2021 - Aug 2023`
+__Church of Jesus Christ of Latter Day Saints__
+- Voluntary Full Time Representative, Rio de Janeiro, Brazil
+- Served as Technology Secretary in the Mission Office
+- Managed social media, newsletters, and IT support for 120+ missionaries
+- Completed tens of ticketing requests
+- Switched technological devices for better models
+- Followed the church budget
+- Negotiated large purchases with tech-repair businesses to save money on fixing phones
+- Maintained communication with people who had current technology problems
+- Prioritized different ticketing level problems to ensure everything works
+
+## Expertise
+- **Diverse Work Experience and Adaptability:** Conducted impactful training sessions addressing issues with technology, specifically how technology was being hacked and how to use the phone OS system to recognize hacking enterprise software.
+- **Strategic Team Leadership:** Organized and conducted weekly zoom meetings with a team of 6 technology specialists showing how to use camera equipment, set up projectors, fix phone problems that people have within different mission zones.
+- **Analytical Expertise:** Analysis on other projects of social media with specific goal making processes used to efficiently better social media use which can be applied in any situation. Presentations of data was simplified into visualizations for those who had difficulties understanding.
+
+## Languages
+- **Portuguese:** Fluent
+
+## Achievements
+- Presented “How AI Works” at the BYU-I AI Expo
+- Full-Time Student Consistently completing 15+ credits
+- Tutors weekly in the Computer Science Tutor lab while in school
+- Project Manager for blood bank sql projects, teaching freshman how to use sql, python, html, and css
+
+## Referrals
+- Available upon request
+
+## Footer
+
+Last updated: Sep 2024
