@@ -1,0 +1,188 @@
+## W05.2 - P2 (Week A) - Class Code
+
+
+### Below is the video for the class code walkthrough.
+[Video1](https://cdnapisec.kaltura.com/p/1157612/sp/115761200/embedIframeJs/uiconf_id/41338032/partner_id/1157612?iframeembed=true&playerId=kaltura_player&entry_id=1_2mcaachm&flashvars[localizationCode]=en&amp;flashvars[sideBarContainer.plugin]=true&amp;flashvars[sideBarContainer.position]=left&amp;flashvars[sideBarContainer.clickToClose]=true&amp;flashvars[chapters.plugin]=true&amp;flashvars[chapters.layout]=vertical&amp;flashvars[chapters.thumbnailRotator]=false&amp;flashvars[streamSelector.plugin]=true&amp;flashvars[EmbedPlayer.SpinnerTarget]=videoHolder&amp;flashvars[dualScreen.plugin]=true&amp;flashvars[Kaltura.addCrossoriginToIframe]=true&amp;&wid=1_o30apini)
+
+[Video2](https://cdnapisec.kaltura.com/p/1157612/sp/115761200/embedIframeJs/uiconf_id/41338032/partner_id/1157612?iframeembed=true&playerId=kaltura_player&entry_id=1_nmcj5frj&flashvars[localizationCode]=en&amp;flashvars[sideBarContainer.plugin]=true&amp;flashvars[sideBarContainer.position]=left&amp;flashvars[sideBarContainer.clickToClose]=true&amp;flashvars[chapters.plugin]=true&amp;flashvars[chapters.layout]=vertical&amp;flashvars[chapters.thumbnailRotator]=false&amp;flashvars[streamSelector.plugin]=true&amp;flashvars[EmbedPlayer.SpinnerTarget]=videoHolder&amp;flashvars[dualScreen.plugin]=true&amp;flashvars[Kaltura.addCrossoriginToIframe]=true&amp;&wid=1_qvqciwtq)
+
+```{=html}
+<iframe id="kaltura_player" src="https://cdnapisec.kaltura.com/p/1157612/sp/115761200/embedIframeJs/uiconf_id/41338032/partner_id/1157612?iframeembed=true&playerId=kaltura_player&entry_id=1_2mcaachm&flashvars[localizationCode]=en&amp;flashvars[sideBarContainer.plugin]=true&amp;flashvars[sideBarContainer.position]=left&amp;flashvars[sideBarContainer.clickToClose]=true&amp;flashvars[chapters.plugin]=true&amp;flashvars[chapters.layout]=vertical&amp;flashvars[chapters.thumbnailRotator]=false&amp;flashvars[streamSelector.plugin]=true&amp;flashvars[EmbedPlayer.SpinnerTarget]=videoHolder&amp;flashvars[dualScreen.plugin]=true&amp;flashvars[Kaltura.addCrossoriginToIframe]=true&amp;&wid=1_o30apini" width="608" height="402" allowfullscreen webkitallowfullscreen mozAllowFullScreen allow="autoplay *; fullscreen *; encrypted-media *" sandbox="allow-downloads allow-forms allow-same-origin allow-scripts allow-top-navigation allow-pointer-lock allow-popups allow-modals allow-orientation-lock allow-popups-to-escape-sandbox allow-presentation allow-top-navigation-by-user-activation" frameborder="0" title="W04"></iframe>
+```
+
+```{=html}
+<iframe id="kaltura_player" src="https://cdnapisec.kaltura.com/p/1157612/sp/115761200/embedIframeJs/uiconf_id/41338032/partner_id/1157612?iframeembed=true&playerId=kaltura_player&entry_id=1_nmcj5frj&flashvars[localizationCode]=en&amp;flashvars[sideBarContainer.plugin]=true&amp;flashvars[sideBarContainer.position]=left&amp;flashvars[sideBarContainer.clickToClose]=true&amp;flashvars[chapters.plugin]=true&amp;flashvars[chapters.layout]=vertical&amp;flashvars[chapters.thumbnailRotator]=false&amp;flashvars[streamSelector.plugin]=true&amp;flashvars[EmbedPlayer.SpinnerTarget]=videoHolder&amp;flashvars[dualScreen.plugin]=true&amp;flashvars[Kaltura.addCrossoriginToIframe]=true&amp;&wid=1_qvqciwtq" width="608" height="402" allowfullscreen webkitallowfullscreen mozAllowFullScreen allow="autoplay *; fullscreen *; encrypted-media *" sandbox="allow-downloads allow-forms allow-same-origin allow-scripts allow-top-navigation allow-pointer-lock allow-popups allow-modals allow-orientation-lock allow-popups-to-escape-sandbox allow-presentation allow-top-navigation-by-user-activation" frameborder="0" title="W04"></iframe>
+```
+
+### Continuation of the Intro to the functions, specifically handling the NaN values. Below is the code from the video so you can follow along.
+
+```{python}
+import pandas as pd
+import numpy as np
+from lets_plot import *
+
+LetsPlot.setup_html(isolated_frame=True)
+
+# %%
+# the short way to help us understand json files
+url_cars = "https://github.com/byuidatascience/data4missing/raw/master/data-raw/mtcars_missing/mtcars_missing.json"
+cars = pd.read_json(url_cars)
+
+url_flights = 'https://github.com/byuidatascience/data4missing/raw/master/data-raw/flights_missing/flights_missing.json'
+flights = pd.read_json(url_flights)
+```
+
+```{python}
+# %%
+#import urllib3
+#import requests
+#import json
+
+# the long way to help us understand json files 
+# url_flights = 'https://github.com/byuidatascience/data4missing/raw/master/data-raw/flights_missing/flights_missing.json'
+# http = urllib3.PoolManager()
+# response = http.request('GET', url_flights)
+# flights_json = json.loads(response.data.decode('utf-8'))
+# flights = pd.json_normalize(flights_json)
+```
+
+```{python} 
+# My thing I works
+df = pd.DataFrame(flights)
+df
+```
+```{python}
+# %%
+# creating a df with missing values
+df = pd.DataFrame({"name": ['Alfred', 'Batman', 'Catwoman', np.nan],
+                   "toy": [np.nan, 'Batmobile', 'Bullwhip',np.nan],
+                   "born": [pd.NaT, pd.Timestamp("1940-04-25"),
+                            pd.NaT, pd.NaT],
+                    "power": [np.nan, np.nan, np.nan, np.nan]})
+df
+```
+
+```{python}
+# %%
+# When would we ever use `df.dropna()`?
+# almost never
+df.dropna()
+```
+
+```{python}
+# %%
+df.dropna(how = 'all')
+```
+
+```{python}
+# %%
+(
+df.dropna(how = 'all', axis = 1)
+.dropna(how='all', axis=0)
+)
+```
+
+```{python}
+# %%
+# axis = 0 is the default
+# axis = 1 is the columns
+# axis = 0 is the rows
+df.dropna(thresh = 2, axis = 0)
+```
+
+```{python}
+# %%
+# thresh applies to the subset
+df.dropna(subset = ['name', 'toy'], thresh = 2)
+###
+```
+
+```{python}
+# %%
+# What if we want to replace all the `NA` values with 
+# the mean weight in the `wt` column of the cars data?
+cars.wt.fillna(cars.wt.mean())
+
+fill_values = {'wt':cars.wt.mean(), 'hp':cars.hp.mean()}
+
+cars.fillna(value = fill_values)
+```
+
+```{python}
+# %%
+# What if we want to replace all the `999` values 
+# with `4` in the cars data?
+cars.replace(999, 4)
+```
+
+```{python}
+# %%
+# fancy
+by_c_values = {'car': {'':'missing', 'Merc 230': 'Mercedes 230'}, 'gear': {999:4}}
+cars.replace(by_c_values)
+```
+
+```{python}
+# %%
+# What if we want to replace all 
+# the `NAs` with a linear interpolation?
+s = pd.Series([0, 1, np.nan, 3])
+s2 = pd.Series([0, 1, np.nan, 3, np.nan, 8, np.nan, 6])
+```
+
+```{python}
+# %%
+# interpolate is a method that fills in the missing values
+s.interpolate()
+```
+
+```{python}
+#%%
+s2.interpolate()
+```
+
+```{python}
+# %%
+# Suppose that the missing car names should be the value preceding it in the table (which is not correct).
+cars.car.fillna(method='ffill') # doesn't work
+```
+
+```{python}
+#%%
+cars.car.replace('',np.nan).fillna(method='ffill') # works
+```
+
+```{python}
+# %%
+# How many rows have missing months?
+flights.month.value_counts()
+```
+
+```{python}
+# %%
+#Can we figure out any patterns in the missingness?
+pd.crosstab(
+    flights.month, 
+    flights.airport_code)
+```
+
+```{python}
+#%%
+pd.crosstab(
+    flights.month,
+    flights.year)
+```
+
+```{python}
+#%%
+fslc = flights.query('airport_code == "SLC"')
+pd.crosstab(
+    fslc.month,
+    fslc.year)
+```
+
+```{python}
+#%%
+# export the data to a JSON file
+cars.to_json()
+```

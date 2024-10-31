@@ -1,7 +1,7 @@
 ---
-title: "Client Report - [Insert Project Title]"
+title: "Client Report - Whats in a name?"
 subtitle: "Course DS 250"
-author: "[STUDENT NAME]"
+author: "Jarom Bradshaw"
 format:
   html:
     self-contained: true
@@ -25,4 +25,114 @@ execute:
     
 ---
 
-### Paste in a template
+### Elevator Pitch
+
+In this analysis, we explore the historical trends of popular names and how certain names gained or declined in popularity over time. We specifically investigate common Christian names and examine how the release of a popular movie affected the usage of a unique name. This analysis provides insights into societal influences on name choices.
+
+---
+
+### Data Preparation
+
+```{python}
+# Load libraries and set up LetsPlot
+import pandas as pd
+from lets_plot import *
+LetsPlot.setup_html(isolated_frame=True)
+
+# Load the data
+df = pd.read_csv("https://github.com/byuidatascience/data4names/raw/master/data-raw/names_year/names_year.csv")
+
+Question 1: Name Usage Over Time
+How does your name at your birth year compare to its use historically?
+
+{python}
+Copy code
+#| label: my-name-trend
+#| code-summary: Trend analysis for personal name
+# Filter the data for my name (replace "YourName" with the actual name)
+name = "YourName"
+name_trend = df[df["name"] == name]
+
+# Plot usage over time
+ggplot(name_trend, aes(x="year", y="count")) + geom_line() + ggtitle(f"Usage of the Name '{name}' Over Time") + \
+    labs(x="Year", y="Frequency")
+Written Analysis:
+
+The usage of my name shows [describe any trends or observations]. Its popularity [increased/decreased] significantly in the [decade(s)], suggesting [potential societal factors or trends].
+
+Question 2: Age Guess for Brittany
+If you talked to someone named Brittany on the phone, what is your guess of their age? What ages would you not guess?
+
+{python}
+Copy code
+#| label: brittany-trend
+#| code-summary: Trend analysis for name Brittany
+# Filter data for the name Brittany
+brittany_trend = df[df["name"] == "Brittany"]
+
+# Plot usage over time
+ggplot(brittany_trend, aes(x="year", y="count")) + geom_line(color="blue") + ggtitle("Usage of the Name 'Brittany' Over Time") + \
+    labs(x="Year", y="Frequency")
+Written Analysis:
+
+Based on the usage trend of the name Brittany, it reached peak popularity during [specific years]. I would guess that someone named Brittany is likely between [age range] and would not guess they are [other age ranges].
+
+Question 3: Christian Names Analysis
+Mary, Martha, Peter, and Paul are all Christian names. From 1920 - 2000, compare the name usage of each of the four names in a single chart. What trends do you notice?
+
+{python}
+Copy code
+#| label: christian-names-trend
+#| code-summary: Christian names trend comparison
+# Filter data for the selected Christian names from 1920 to 2000
+names = ["Mary", "Martha", "Peter", "Paul"]
+christian_names_trend = df[(df["name"].isin(names)) & (df["year"] >= 1920) & (df["year"] <= 2000)]
+
+# Plot usage over time for each name
+ggplot(christian_names_trend, aes(x="year", y="count", color="name")) + geom_line() + \
+    ggtitle("Usage of Christian Names (1920-2000)") + labs(x="Year", y="Frequency")
+Written Analysis:
+
+Observing these names from 1920 to 2000, [discuss noticeable patterns for each name, e.g., Mary’s popularity, any declines, and periods of increase]. The trends likely reflect [cultural or historical influences].
+
+Question 4: Name from a Famous Movie
+Think of a unique name from a famous movie. Plot the usage of that name and see how changes line up with the movie release. Does it look like the movie had an effect on usage?
+
+{python}
+Copy code
+#| label: movie-name-trend
+#| code-summary: Name trend influenced by movie
+# Replace "FamousMovieName" with the actual name chosen
+movie_name = "FamousMovieName"
+movie_name_trend = df[df["name"] == movie_name]
+
+# Plot usage over time with a reference line for the movie release year
+movie_release_year = 1995  # replace with actual release year of the movie
+ggplot(movie_name_trend, aes(x="year", y="count")) + geom_line(color="green") + \
+    geom_vline(xintercept=movie_release_year, color="red", linetype="dashed") + \
+    ggtitle(f"Usage of the Name '{movie_name}' Over Time") + labs(x="Year", y="Frequency")
+Written Analysis:
+
+The name [MovieName] shows a [significant rise/decline] in popularity after the release of [movie name]. This suggests that [the movie likely influenced its popularity].
+
+Stretch Question: Reproduce the Chart for the Name Elliot
+Reproduce the chart Elliot using the data from the names_year.csv file.
+
+{python}
+Copy code
+#| label: elliot-trend
+#| code-summary: Reproduce chart for the name Elliot
+# Filter data for the name Elliot
+elliot_trend = df[df["name"] == "Elliot"]
+
+# Plot usage over time
+ggplot(elliot_trend, aes(x="year", y="count")) + geom_line(color="purple") + \
+    ggtitle("Usage of the Name 'Elliot' Over Time") + labs(x="Year", y="Frequency")
+Written Analysis:
+
+The popularity of the name Elliot demonstrates [describe any observed patterns].
+
+Summary and Self-Assessment
+In this project, we analyzed trends in name usage over time and observed the impact of cultural and media influences. The analysis reveals how certain names rise or fall in popularity due to societal factors. I would rate my work a [rating] out of 5 because [reason for rating]. I could further improve by [mention any future improvements or insights].
+
+

@@ -30,11 +30,18 @@ execute:
 <!-- highlight line 31 to the end and use ctrl + / (win) or command + / (mac) to uncomment out the code below, the same shortcut can be used to comment out code again. -->
 
 ```{python}
-#| label: libraries
-#| include: false
+# %%
+# Read in libraries
 import pandas as pd
 import numpy as np
-import plotly.express as px
+from palmerpenguins import load_penguins
+from lets_plot import *
+
+LetsPlot.setup_html(isolated_frame=True)
+```
+
+```{python}
+penguins = load_penguins()
 ```
 
 
@@ -71,11 +78,14 @@ I was able to finish the Course Setup, mostly on my own. I was unable to get the
 #| fig-cap: "My useless chart"
 #| fig-align: center
 # Include and execute your code here
-chart = px.scatter(df.head(200),
-    x="name", 
-    y="AK"
-)
-chart
+from lets_plot import *
+
+# Set up Lets-Plot to work in HTML
+LetsPlot.setup_html()
+
+# Example scatter plot with Lets-Plot
+ggplot(penguins, aes(x="flipper_length_mm", y="body_mass_g")) + geom_point(aes(color="species", shape="island"))
+
 ```
 
 I had to comment out the code I used as it was bugging.
@@ -129,11 +139,13 @@ LetsPlot.setup_html()
 #| fig-cap: "My useless chart"
 #| fig-align: center
 # Include and execute your code here
-chart = px.bar(df.head(200),
-    x="name", 
-    y="AK"
-)
-chart.show()
+
+# BAR does not exist
+# chart = pd.bar(df.head(200),
+#     x="name", 
+#     y="AK"
+# )
+# chart.show()
 ```
 
 
@@ -177,11 +189,9 @@ I had several bugs while doing this part of the project. I watched both of the v
 #| fig-cap: "My useless chart"
 #| fig-align: center
 # Include and execute your code here
-chart = px.bar(df.head(200),
-    x="name", 
-    y="AK"
-)
-chart.show()
+# Bar plot with Lets-Plot for specific values
+ggplot(df.head(200), aes(x="name", y="AK")) + geom_bar(stat="identity")
+
 ```
 
 
@@ -200,4 +210,4 @@ mydat = df.head(1000)\
 
 display(mydat)
 
-``` 
+```
