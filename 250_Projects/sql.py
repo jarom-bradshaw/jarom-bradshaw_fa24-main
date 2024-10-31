@@ -1,4 +1,4 @@
-# %%
+#%%
 import pandas as pd 
 import numpy as np
 import sqlite3
@@ -20,3 +20,4 @@ q = '''
     '''
 table = pd.read_sql_query(q,con)
 table.filter(['name'])
+# %%
