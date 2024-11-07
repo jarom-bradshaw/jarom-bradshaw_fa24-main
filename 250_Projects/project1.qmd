@@ -38,49 +38,55 @@ In this analysis, we explore the historical trends of popular names and how cert
 import pandas as pd
 from lets_plot import *
 LetsPlot.setup_html(isolated_frame=True)
+```
 
 # Load the data
+``` {python}
 df = pd.read_csv("https://github.com/byuidatascience/data4names/raw/master/data-raw/names_year/names_year.csv")
-
+```
 Question 1: Name Usage Over Time
 How does your name at your birth year compare to its use historically?
 
-{python}
+```{python}
 Copy code
 #| label: my-name-trend
 #| code-summary: Trend analysis for personal name
 # Filter the data for my name (replace "YourName" with the actual name)
-name = "YourName"
-name_trend = df[df["name"] == name]
+name = "Jarom"
+name_trend = df[df["Jarom"] == name]
 
 # Plot usage over time
 ggplot(name_trend, aes(x="year", y="count")) + geom_line() + ggtitle(f"Usage of the Name '{name}' Over Time") + \
     labs(x="Year", y="Frequency")
+```
+
 Written Analysis:
 
 The usage of my name shows [describe any trends or observations]. Its popularity [increased/decreased] significantly in the [decade(s)], suggesting [potential societal factors or trends].
 
-Question 2: Age Guess for Brittany
-If you talked to someone named Brittany on the phone, what is your guess of their age? What ages would you not guess?
+Question 2: Age Guess for Jarom
+If you talked to someone named Jarom on the phone, what is your guess of their age? What ages would you not guess?
 
-{python}
+```{python}
 Copy code
-#| label: brittany-trend
-#| code-summary: Trend analysis for name Brittany
-# Filter data for the name Brittany
-brittany_trend = df[df["name"] == "Brittany"]
+#| label: jarom-trend
+#| code-summary: Trend analysis for name Jarom
+# Filter data for the name Jarom
+jarom_trend = df[df["name"] == "Jarom"]
 
 # Plot usage over time
-ggplot(brittany_trend, aes(x="year", y="count")) + geom_line(color="blue") + ggtitle("Usage of the Name 'Brittany' Over Time") + \
+ggplot(brittany_trend, aes(x="year", y="count")) + geom_line(color="blue") + ggtitle("Usage of the Name 'Jarom' Over Time") + \
     labs(x="Year", y="Frequency")
+```
+
 Written Analysis:
 
-Based on the usage trend of the name Brittany, it reached peak popularity during [specific years]. I would guess that someone named Brittany is likely between [age range] and would not guess they are [other age ranges].
+Based on the usage trend of the name Jarom, it reached peak popularity during [specific years]. I would guess that someone named Jarom is likely between [age range] and would not guess they are [other age ranges].
 
 Question 3: Christian Names Analysis
 Mary, Martha, Peter, and Paul are all Christian names. From 1920 - 2000, compare the name usage of each of the four names in a single chart. What trends do you notice?
 
-{python}
+```{python}
 Copy code
 #| label: christian-names-trend
 #| code-summary: Christian names trend comparison
@@ -91,6 +97,8 @@ christian_names_trend = df[(df["name"].isin(names)) & (df["year"] >= 1920) & (df
 # Plot usage over time for each name
 ggplot(christian_names_trend, aes(x="year", y="count", color="name")) + geom_line() + \
     ggtitle("Usage of Christian Names (1920-2000)") + labs(x="Year", y="Frequency")
+```
+
 Written Analysis:
 
 Observing these names from 1920 to 2000, [discuss noticeable patterns for each name, e.g., Mary’s popularity, any declines, and periods of increase]. The trends likely reflect [cultural or historical influences].
@@ -98,7 +106,7 @@ Observing these names from 1920 to 2000, [discuss noticeable patterns for each n
 Question 4: Name from a Famous Movie
 Think of a unique name from a famous movie. Plot the usage of that name and see how changes line up with the movie release. Does it look like the movie had an effect on usage?
 
-{python}
+```{python}
 Copy code
 #| label: movie-name-trend
 #| code-summary: Name trend influenced by movie
@@ -111,6 +119,10 @@ movie_release_year = 1995  # replace with actual release year of the movie
 ggplot(movie_name_trend, aes(x="year", y="count")) + geom_line(color="green") + \
     geom_vline(xintercept=movie_release_year, color="red", linetype="dashed") + \
     ggtitle(f"Usage of the Name '{movie_name}' Over Time") + labs(x="Year", y="Frequency")
+
+    # THE FUNCTION geom_vline will make a verticle line that is red and dashed where x = movie_release_year, which in this case.
+```
+
 Written Analysis:
 
 The name [MovieName] shows a [significant rise/decline] in popularity after the release of [movie name]. This suggests that [the movie likely influenced its popularity].
@@ -118,7 +130,9 @@ The name [MovieName] shows a [significant rise/decline] in popularity after the 
 Stretch Question: Reproduce the Chart for the Name Elliot
 Reproduce the chart Elliot using the data from the names_year.csv file.
 
-{python}
+The code below was created through ChatGPT. I do not know how to use labs(x,y):
+
+```{python}
 Copy code
 #| label: elliot-trend
 #| code-summary: Reproduce chart for the name Elliot
@@ -128,11 +142,13 @@ elliot_trend = df[df["name"] == "Elliot"]
 # Plot usage over time
 ggplot(elliot_trend, aes(x="year", y="count")) + geom_line(color="purple") + \
     ggtitle("Usage of the Name 'Elliot' Over Time") + labs(x="Year", y="Frequency")
+```
+
 Written Analysis:
 
 The popularity of the name Elliot demonstrates [describe any observed patterns].
 
 Summary and Self-Assessment
-In this project, we analyzed trends in name usage over time and observed the impact of cultural and media influences. The analysis reveals how certain names rise or fall in popularity due to societal factors. I would rate my work a [rating] out of 5 because [reason for rating]. I could further improve by [mention any future improvements or insights].
+In this project, we analyzed trends in name usage over time and observed the impact of cultural and media influences. The analysis reveals how certain names rise or fall in popularity due to societal factors. I would rate my work a 3 out of 5 because I was rushed as I turned it in late and deprived myself of some learning experience. I could further improve by balancing my time and slotting time specifically to this class so that I can do well and learn and improve my python skills and professional credibility skills. I can also improve my skills to be able to make a stretch chart or graph without using ChatGPT. I would want to be able to stretch myself to solve interesting problems just with my intellect.
 
 

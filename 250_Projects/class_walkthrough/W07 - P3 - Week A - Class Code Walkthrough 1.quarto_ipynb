@@ -1,0 +1,175 @@
+{
+  "cells": [
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "## W07.2 - U3 (Week B) - Class Code\n",
+        "\n",
+        "### Below is the video for the class code walkthrough.\n",
+        "[Video](https://cdnapisec.kaltura.com/p/1157612/sp/115761200/embedIframeJs/uiconf_id/41338032/partner_id/1157612?iframeembed=true&playerId=kaltura_player&entry_id=1_krp9ct2r&flashvars[localizationCode]=en&amp;flashvars[sideBarContainer.plugin]=true&amp;flashvars[sideBarContainer.position]=left&amp;flashvars[sideBarContainer.clickToClose]=true&amp;flashvars[chapters.plugin]=true&amp;flashvars[chapters.layout]=vertical&amp;flashvars[chapters.thumbnailRotator]=false&amp;flashvars[streamSelector.plugin]=true&amp;flashvars[EmbedPlayer.SpinnerTarget]=videoHolder&amp;flashvars[dualScreen.plugin]=true&amp;flashvars[Kaltura.addCrossoriginToIframe]=true&amp;&wid=1_gd2vefwz)\n",
+        "\n",
+        "\n",
+        "\n",
+        "\n",
+        "```{=html}\n",
+        "<iframe id=\"kaltura_player\" src=\"https://cdnapisec.kaltura.com/p/1157612/sp/115761200/embedIframeJs/uiconf_id/41338032/partner_id/1157612?iframeembed=true&playerId=kaltura_player&entry_id=1_krp9ct2r&flashvars[localizationCode]=en&amp;flashvars[sideBarContainer.plugin]=true&amp;flashvars[sideBarContainer.position]=left&amp;flashvars[sideBarContainer.clickToClose]=true&amp;flashvars[chapters.plugin]=true&amp;flashvars[chapters.layout]=vertical&amp;flashvars[chapters.thumbnailRotator]=false&amp;flashvars[streamSelector.plugin]=true&amp;flashvars[EmbedPlayer.SpinnerTarget]=videoHolder&amp;flashvars[dualScreen.plugin]=true&amp;flashvars[Kaltura.addCrossoriginToIframe]=true&amp;&wid=1_gd2vefwz\" width=\"608\" height=\"402\" allowfullscreen webkitallowfullscreen mozAllowFullScreen allow=\"autoplay *; fullscreen *; encrypted-media *\" sandbox=\"allow-downloads allow-forms allow-same-origin allow-scripts allow-top-navigation allow-pointer-lock allow-popups allow-modals allow-orientation-lock allow-popups-to-escape-sandbox allow-presentation allow-top-navigation-by-user-activation\" frameborder=\"0\" title=\"W07\"></iframe>\n",
+        "```\n",
+        "\n",
+        "\n",
+        "\n",
+        "\n",
+        "### Introduction to the functions you will be learning in this unit. Below is the code used in the video so you can follow along.\n"
+      ],
+      "id": "88597653"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "# %%\n",
+        "import pandas as pd \n",
+        "import numpy as np\n",
+        "import sqlite3"
+      ],
+      "id": "00221e6f",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "# %%\n",
+        "# Upgrade pip if needed\n",
+        "import sys\n",
+        "!{sys.executable} -m pip install --upgrade pip"
+      ],
+      "id": "bed1a8c0",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "# %%\n",
+        "# careful to list your path to the file. Or save this code in the same folder as the sqlite file.\n",
+        "sqlite_file = '../lahmansbaseballdb.sqlite'\n",
+        "con = sqlite3.connect(sqlite_file)"
+      ],
+      "id": "932007eb",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "# %%\n",
+        "q = 'SELECT * FROM batting LIMIT 100'\n",
+        "batting5 = pd.read_sql_query(q,con)"
+      ],
+      "id": "835c7d8e",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "# %%\n",
+        "batting5"
+      ],
+      "id": "b55f25cf",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "# %%\n",
+        "# What columns do we want to select?\n",
+        "q = '''\n",
+        "SELECT  playerid\n",
+        "        ,teamid \n",
+        "        ,ab\n",
+        "        ,h\n",
+        "        ROUND(h/(ab*1.0),3) as\n",
+        "        'BA'\n",
+        "ORDER BY AB, H DESC\n",
+        "LIMIT 5\n",
+        "'''\n",
+        "# ERRRORS\n",
+        "\n",
+        "pd.read_sql_query(q,con)"
+      ],
+      "id": "c9639e53",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "# %%\n",
+        "# What calculation do we want to perform?\n",
+        "\n",
+        "q = '''\n",
+        "SELECT playerid, \n",
+        "        teamid, \n",
+        "        ab, \n",
+        "        h, \n",
+        "        ROUND(h/(ab*1.0),3)\n",
+        "        as 'BA'\n",
+        "FROM batting\n",
+        "LIMIT 100\n",
+        "'''\n",
+        "\n",
+        "batting_calc = pd.read_sql_query(q,con)\n",
+        "batting_calc"
+      ],
+      "id": "f0481b57",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "# %%\n",
+        "# What name do we give our calculated column?\n",
+        "\n",
+        "q = '''\n",
+        "SELECT teamid, \n",
+        "        yearid,\n",
+        "        Sum(r) AS Total_Runs\n",
+        "FROM batting\n",
+        "-- WHERE r>50\n",
+        "GROUP BY teamid, yearid\n",
+        "HAVING\n",
+        "Total_Runs > 1000\n",
+        "ORDER BY teamID, yearID ASC, Total_Runs DESC\n",
+        "LIMIT 10000\n",
+        "'''\n",
+        "\n",
+        "batting_calc = pd.read_sql_query(q,con)\n",
+        "batting_calc"
+      ],
+      "id": "5cc3f570",
+      "execution_count": null,
+      "outputs": []
+    }
+  ],
+  "metadata": {
+    "kernelspec": {
+      "name": "python3",
+      "language": "python",
+      "display_name": "Python 3 (ipykernel)",
+      "path": "C:\\Users\\jarom\\AppData\\Local\\Programs\\Python\\Python312\\share\\jupyter\\kernels\\python3"
+    }
+  },
+  "nbformat": 4,
+  "nbformat_minor": 5
+}

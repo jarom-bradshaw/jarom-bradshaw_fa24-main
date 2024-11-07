@@ -24,5 +24,162 @@ execute:
   warning: false
     
 ---
+```{python}
+import pandas as pd 
+import numpy as np
+import sqlite3
+```
+```{python}
+# %%
+# careful to list your path to the file. Or save this code in the same folder as the sqlite file.
+sqlite_file = '../lahmansbaseballdb.sqlite'
+con = sqlite3.connect(sqlite_file)
+```
 
-### Paste in a template
+Questions and Tasks (Core)
+Write an SQL query to create a new dataframe about baseball players who attended BYU-Idaho. The new table should contain five columns: playerID, schoolID, salary, and the yearID/teamID associated with each salary. Order the table by salary (highest to lowest) and print out the table in your report.
+```{python}
+
+```
+
+This three-part question requires you to calculate batting average (number of hits divided by the number of at-bats)
+
+Write an SQL query that provides playerID, yearID, and batting average for players with at least 1 at bat that year. Sort the table from highest batting average to lowest, and then by playerid alphabetically. Show the top 5 results in your report.
+```{python}
+
+```
+
+Use the same query as above, but only include players with at least 10 at bats that year. Print the top 5 results.
+Now calculate the batting average for players over their entire careers (all years combined). Only include players with at least 100 at bats, and print the top 5 results.
+Pick any two baseball teams and compare them using a metric of your choice (average salary, home runs, number of wins, etc). Write an SQL query to get the data you need, then make a graph using Lets-Plot to visualize the comparison. What do you learn?
+```{python}
+q = '''
+    SELECT bp.yearid, 
+        sum(bp.ab) as ab, 
+        sum(bp.h) as h,
+        sum(bp.r) as runs,
+        sum(bp.g) as games, 
+        count(asf.playerID) as num_players
+        -- asf.gp, 
+        -- asf.gameid
+    FROM BattingPost as bp
+    JOIN AllstarFull as asf
+        ON  bp.playerid = asf.playerid AND
+            bp.yearid = asf.yearid
+    WHERE (asf.yearid > 1999
+        AND asf.gp != 1)
+        -- AND ab > 0
+    GROUP BY bp.yearid
+    ORDER BY bp.yearid
+    LIMIT 15
+    '''
+df = pd.read_sql_query(q,con)
+df
+
+geomplo
+```
+
+Questions and Tasks (Stretch)
+Here is an example Stretch question(s) for this project. Your instructor may assign different Stretch question(s). You must comment in Canvas when submitting your project if you completed any of the Stretch questions.
+```{python}
+
+```
+
+Advanced Salary Distribution by Position (with Case Statement):
+```{python}
+
+```
+
+Write an SQL query that provides a summary table showing the average salary for players in each position (e.g., pitcher, catcher, outfielder) across all years. Include the following columns:
+```{python}
+
+```
+
+position
+average_salary
+total_players
+highest_salary
+The highest_salary column should display the highest salary ever earned by a player in that position. If no player in that position has a recorded salary, display “N/A” for the highest salary.
+
+Additionally, create a new column called salary_category using a case statement:
+
+If the average salary is above $1 million, categorize it as “High Salary.”
+If the average salary is between $500,000 and $1 million, categorize it as “Medium Salary.”
+Otherwise, categorize it as “Low Salary.”
+Order the table by average salary in descending order.
+
+Print the top 10 rows of this summary table.
+
+Advanced Career Longevity and Performance (with Subqueries):
+
+Calculate the average career length (in years) for players who have played at least one game. Then, identify the top 10 players with the longest careers (based on the number of years they played). Include their:
+
+playerID
+first_name
+last_name
+career_length
+The career_length should be calculated as the difference between the maximum and minimum yearID for each player.
+import pandas as pd
+import sqlite3
+
+# Connect to the SQLite database
+conn = sqlite3.connect('baseball.db')
+
+# Advanced Salary Distribution by Position
+query_salary_distribution = """
+SELECT 
+  position
+  ,AVG(salary) AS average_salary
+  ,COUNT(playerID) AS total_players
+  ,MAX(salary) AS highest_salary
+  ,CASE
+    WHEN AVG(salary) > 1000000 THEN 'High Salary'
+    WHEN AVG(salary) BETWEEN 500000 AND 1000000 THEN 'Medium Salary'
+    ELSE 'Low Salary'
+  END AS salary_category
+FROM 
+  Salaries
+JOIN 
+  Appearances ON Salaries.playerID = Appearances.playerID
+GROUP BY 
+  position
+ORDER BY 
+  average_salary DESC
+LIMIT 10;
+"""
+
+df_salary_distribution = pd.read_sql_query(query_salary_distribution, conn)
+print(df_salary_distribution)
+
+# Advanced Career Longevity and Performance
+query_career_longevity = """
+WITH career_years AS (
+  SELECT 
+    playerID,
+    MIN(yearID) AS start_year,
+    MAX(yearID) AS end_year,
+    (MAX(yearID) - MIN(yearID) + 1) AS career_length
+  FROM 
+    Appearances
+  GROUP BY 
+    playerID
+)
+SELECT 
+  c.playerID,
+  p.nameFirst AS first_name,
+  p.nameLast AS last_name,
+  c.career_length
+FROM 
+  career_years c
+JOIN 
+  Master p ON c.playerID = p.playerID
+ORDER BY 
+  c.career_length DESC
+LIMIT 10;
+"""
+
+df_career_longevity = pd.read_sql_query(query_career_longevity, conn)
+print(df_career_longevity)
+
+# Close the connection
+conn.close()

@@ -98,3 +98,11 @@ LIMIT 10000
 batting_calc = pd.read_sql_query(q,con)
 batting_calc
 ```
+
+```{python}
+# %%
+# What name do we give our calculated column?
+
+con = sqlite3.connect('lahmansbaseballdb.sqlite')
+df = pd.read_sql_query("SELECT * FROM batting WHERE playerID = 'addybo01' LIMIT 2", con)
+```

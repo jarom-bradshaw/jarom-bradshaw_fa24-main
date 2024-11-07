@@ -26,3 +26,8 @@ execute:
 ---
 
 ### Paste in a template
+```
+{python}
+con = sqlite3.connect('lahmansbaseballdb.sqlite')
+df = pd.read_sql_query("SELECT * FROM batting WHERE playerID = 'addybo01' LIMIT 2", con)
+```
